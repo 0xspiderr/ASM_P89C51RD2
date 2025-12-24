@@ -1,0 +1,66 @@
+ORG 1000h
+
+MAIN:
+    MOV DPTR, #1000h
+    MOVX A, @DPTR       
+
+CHECK_0:
+    CJNE A, #3Fh, CHECK_1 
+    MOV R3, #00h          
+    SJMP SAVE_RESULT      
+
+CHECK_1:
+    CJNE A, #06h, CHECK_2 
+    MOV R3, #01h
+    SJMP SAVE_RESULT
+
+CHECK_2:
+    CJNE A, #5Bh, CHECK_3
+    MOV R3, #02h
+    SJMP SAVE_RESULT
+
+CHECK_3:
+    CJNE A, #4Fh, CHECK_4
+    MOV R3, #03h
+    SJMP SAVE_RESULT
+
+CHECK_4:
+    CJNE A, #66h, CHECK_5
+    MOV R3, #04h
+    SJMP SAVE_RESULT
+	
+CHECK_5:
+    CJNE A, #6Dh, CHECK_6
+    MOV R3, #05h
+    SJMP SAVE_RESULT
+	
+CHECK_6:
+    CJNE A, #7Dh, CHECK_7
+    MOV R3, #06h
+    SJMP SAVE_RESULT
+	
+CHECK_7:
+    CJNE A, #07h, CHECK_8
+    MOV R3, #07h
+    SJMP SAVE_RESULT
+
+CHECK_8:
+    CJNE A, #7Fh, CHECK_9
+    MOV R3, #08h
+    SJMP SAVE_RESULT
+
+CHECK_9:
+    CJNE A, #6Fh, NOT_FOUND
+    MOV R3, #09h
+    SJMP SAVE_RESULT
+
+NOT_FOUND:
+    MOV R3, #0FFh         
+
+SAVE_RESULT:
+    MOV DPTR, #0100h
+    MOV A, R3             
+    MOVX @DPTR, A         
+
+    SJMP $
+END
